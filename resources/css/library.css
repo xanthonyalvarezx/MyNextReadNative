@@ -1,0 +1,29 @@
+/* Library — same dark system */
+
+.app-library {
+    box-sizing: border-box;
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: clamp(1.5rem, 4vh, 2.5rem) clamp(1.25rem, 3vw, 2rem);
+    background: linear-gradient(
+        165deg,
+        color-mix(in srgb, var(--color-teal) 5%, var(--color-onyx)) 0%,
+        color-mix(in srgb, var(--color-indigo) 6%, var(--color-onyx)) 100%
+    );
+}
+
+.app-library__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.55rem, 3.2vw, 2.15rem);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--color-text);
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-card);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-soft);
+    display: inline-block;
+}

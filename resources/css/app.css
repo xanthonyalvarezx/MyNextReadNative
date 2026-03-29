@@ -1,0 +1,108 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap");
+@import "tailwindcss";
+@import "./nav.css" layer(components);
+@import "./landing.css" layer(components);
+@import "./search.css" layer(components);
+@import "./library.css" layer(components);
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+    --font-display: "Rubik Dirt", ui-sans-serif, system-ui, sans-serif;
+    --color-teal: #008080;
+    --color-onyx: #353839;
+    --color-taupe: #483c32;
+    --color-slate: #708090;
+    --color-indigo: #4b0082;
+}
+
+/* Teal · Onyx · Taupe · Slate · Indigo — dark cool mood */
+:root {
+    --color-teal: #008080;
+    --color-teal-hover: #006666;
+    --color-onyx: #353839;
+    --color-taupe: #483c32;
+    --color-slate: #708090;
+    --color-indigo: #4b0082;
+
+    --color-surface: #3a3e42;
+    --color-surface-card: #40454a;
+    --color-text: #e8eae9;
+    --color-text-muted: #9aabae;
+
+    --color-teal-soft: color-mix(in srgb, var(--color-teal) 24%, var(--color-onyx));
+    --color-indigo-soft: color-mix(in srgb, var(--color-indigo) 22%, var(--color-onyx));
+    --color-taupe-glow: color-mix(in srgb, var(--color-taupe) 35%, var(--color-text));
+    --color-border: color-mix(in srgb, var(--color-slate) 45%, var(--color-onyx));
+
+    --color-alert-soft: color-mix(in srgb, var(--color-indigo) 16%, var(--color-onyx));
+    --color-alert-border: color-mix(in srgb, var(--color-indigo) 45%, var(--color-slate));
+    --color-alert-text: color-mix(in srgb, var(--color-text) 88%, var(--color-teal));
+
+    --shadow-soft: 0 4px 28px rgb(0 0 0 / 0.35);
+    --shadow-lift: 0 12px 40px rgb(0 0 0 / 0.45);
+    --shadow-inner: inset 0 1px 0 rgb(255 255 255 / 0.06);
+
+    --radius-pill: 624.9375rem;
+    --radius-lg: 1.125rem;
+    --radius-md: 0.75rem;
+    --radius-sm: 0.5rem;
+
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+    --font-display: "Rubik Dirt", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+    color-scheme: dark;
+}
+
+.app-body {
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background:
+        radial-gradient(
+            90% 60% at 100% 0%,
+            color-mix(in srgb, var(--color-indigo) 22%, transparent) 0%,
+            transparent 55%
+        ),
+        radial-gradient(
+            70% 50% at 0% 100%,
+            color-mix(in srgb, var(--color-teal) 14%, transparent) 0%,
+            transparent 50%
+        ),
+        radial-gradient(
+            ellipse 80% 60% at 50% 120%,
+            color-mix(in srgb, var(--color-taupe) 18%, var(--color-onyx)) 0%,
+            var(--color-onyx) 55%
+        );
+    -webkit-font-smoothing: antialiased;
+}
+
+.app-main {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
