@@ -1,29 +1,331 @@
-/* Library — same dark system */
+/* Library — polished dark shelf view */
+
+.app-library__flash {
+    margin: 0 0 0.75rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: var(--radius-md);
+    font-size: 0.84rem;
+    border: 1px solid var(--color-border);
+}
+
+.app-library__flash--success {
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-teal) 14%, var(--color-surface-card));
+    border-color: color-mix(in srgb, var(--color-teal) 40%, var(--color-border));
+}
+
+.app-library__flash--error {
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-indigo) 18%, var(--color-surface-card));
+    border-color: color-mix(in srgb, var(--color-indigo) 45%, var(--color-border));
+}
+
+.app-library__flash--warning {
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-taupe) 12%, var(--color-surface-card));
+    border-color: color-mix(in srgb, var(--color-slate) 35%, var(--color-border));
+}
 
 .app-library {
     box-sizing: border-box;
     flex: 1;
     min-height: 0;
     overflow: auto;
-    padding: clamp(1.5rem, 4vh, 2.5rem) clamp(1.25rem, 3vw, 2rem);
+    padding: clamp(1.25rem, 3.8vh, 2.5rem) clamp(1rem, 3vw, 2rem);
     background: linear-gradient(
         165deg,
         color-mix(in srgb, var(--color-teal) 5%, var(--color-onyx)) 0%,
-        color-mix(in srgb, var(--color-indigo) 6%, var(--color-onyx)) 100%
+        color-mix(in srgb, var(--color-indigo) 7%, var(--color-onyx)) 100%
     );
+}
+
+.app-library__header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius-lg);
+    background: color-mix(
+        in srgb,
+        var(--color-surface-card) 88%,
+        var(--color-indigo)
+    );
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-soft);
 }
 
 .app-library__title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(1.55rem, 3.2vw, 2.15rem);
+    font-size: clamp(1.45rem, 2.6vw, 2rem);
     font-weight: 400;
     letter-spacing: 0.02em;
     color: var(--color-text);
-    padding: 1rem 1.25rem;
+}
+
+.app-library__subtitle {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.app-library__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+    gap: 1rem;
+}
+
+.app-library__empty {
+    padding: 1.2rem;
+    border: 1px dashed var(--color-border);
     border-radius: var(--radius-lg);
+    color: var(--color-text-muted);
+    background: color-mix(in srgb, var(--color-surface) 92%, var(--color-onyx));
+}
+
+.app-library__book-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
     background: var(--color-surface-card);
     border: 1px solid var(--color-border);
     box-shadow: var(--shadow-soft);
-    display: inline-block;
+    border-radius: var(--radius-lg);
+    padding: 0.8rem;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.25s ease;
+}
+
+.app-library__book-card:hover {
+    transform: translateY(-1px);
+    border-color: color-mix(
+        in srgb,
+        var(--color-teal) 35%,
+        var(--color-border)
+    );
+    box-shadow: var(--shadow-lift);
+}
+
+.app-library__book-card-image {
+    width: 100%;
+    max-width: 5.75rem;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    align-self: center;
+
+    border-radius: var(--radius-sm);
+    background: color-mix(
+        in srgb,
+        var(--color-slate) 25%,
+        var(--color-surface)
+    );
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-inner);
+}
+
+.app-library__book-card-title {
+    margin: 0.1rem 0 0;
+    font-size: 0.96rem;
+    line-height: 1.3;
+    color: var(--color-text);
+}
+
+.app-library__book-card-author {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+
+.app-library__book-card-genres {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.app-library__book-card-genre-tag {
+    margin: 0;
+    padding: 0.2rem 0.45rem;
+    font-size: 0.68rem;
+    line-height: 1.25;
+    color: var(--color-text);
+    border-radius: var(--radius-pill);
+    border: 1px solid color-mix(in srgb, var(--color-teal) 32%, var(--color-border));
+    background: color-mix(in srgb, var(--color-teal) 10%, var(--color-surface));
+}
+
+.app-library__book-card-pages {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.app-library__book-card-shelf {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.35rem;
+}
+
+.app-library__shelf-label {
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.app-library__shelf-value {
+    font-size: 0.75rem;
+    color: var(--color-text);
+    padding: 0.18rem 0.5rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid
+        color-mix(in srgb, var(--color-teal) 35%, var(--color-border));
+    background: color-mix(in srgb, var(--color-teal) 12%, var(--color-surface));
+}
+
+.app-library__delete-btn {
+    margin-top: 0.35rem;
+    width: 100%;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 50px;
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.app-library__delete-btn:hover {
+    border-color: color-mix(in srgb, var(--color-teal) 65%, var(--color-slate));
+    background: color-mix(in srgb, var(--color-teal) 28%, var(--color-surface));
+    border-radius: 50px;
+}
+
+.app-library__shelf-form {
+    margin-top: 0.35rem;
+    width: 100%;
+}
+
+.app-library__shelf-field-label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+.app-library__shelf-select {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.45rem 2.1rem 0.45rem 0.85rem;
+    font-size: 0.8rem;
+    font-family: inherit;
+    line-height: 1.35;
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-inner), var(--shadow-soft);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239aabae' d='M2.5 4.5 6 8l3.5-3.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.65rem center;
+    background-size: 0.75rem;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.app-library__shelf-select:hover {
+    border-color: color-mix(
+        in srgb,
+        var(--color-teal) 40%,
+        var(--color-border)
+    );
+}
+
+.app-library__shelf-select:focus {
+    outline: none;
+    border-color: color-mix(in srgb, var(--color-teal) 65%, var(--color-slate));
+    box-shadow:
+        var(--shadow-inner),
+        0 0 0 3px color-mix(in srgb, var(--color-teal) 22%, transparent);
+}
+
+.app-library__shelf-select option {
+    color: var(--color-text);
+    background-color: var(--color-surface-card);
+}
+
+.app-library__delete-dialog {
+    margin: auto;
+    padding: 0;
+    max-width: min(21rem, calc(100vw - 2rem));
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-card);
+    color: var(--color-text);
+    box-shadow: var(--shadow-lift);
+}
+
+.app-library__delete-dialog::backdrop {
+    background: color-mix(in srgb, var(--color-onyx) 60%, transparent);
+}
+
+.app-library__delete-dialog-inner {
+    padding: 1.05rem 1.1rem;
+}
+
+.app-library__delete-dialog-title {
+    margin: 0 0 0.55rem;
+    font-size: 1rem;
+    font-family: var(--font-display);
+    font-weight: 400;
+}
+
+.app-library__delete-dialog-text {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.84rem;
+}
+
+.app-library__delete-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 0.9rem;
+}
+
+.app-library__delete-dialog-cancel,
+.app-library__delete-dialog-confirm {
+    padding: 0.4rem 0.85rem;
+    font-size: 0.78rem;
+    font-family: inherit;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    background: var(--color-surface);
+}
+
+.app-library__delete-dialog-confirm {
+    border-color: color-mix(in srgb, var(--color-indigo) 45%, var(--color-border));
+    background: color-mix(in srgb, var(--color-indigo) 22%, var(--color-surface));
+    font-weight: 600;
 }

@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Native\Laravel\Facades\Window;
 use Native\Laravel\Contracts\ProvidesPhpIni;
+use Native\Laravel\Facades\Window;
 
 class NativeAppServiceProvider implements ProvidesPhpIni
 {
@@ -13,7 +13,16 @@ class NativeAppServiceProvider implements ProvidesPhpIni
      */
     public function boot(): void
     {
-        Window::open();
+        Window::open()
+            ->width(1280)
+            ->height(900)
+            ->title('My Next Read')
+            ->fullscreenable(true)
+            ->fullscreen(false)
+            ->minimizable(true)
+            ->maximizable(true)
+            ->resizable(true)
+            ->resizable(true);
     }
 
     /**
@@ -21,7 +30,6 @@ class NativeAppServiceProvider implements ProvidesPhpIni
      */
     public function phpIni(): array
     {
-        return [
-        ];
+        return [];
     }
 }

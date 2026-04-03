@@ -25,6 +25,7 @@ class GoogleBooksClient
                 'q' => $query,
                 'maxResults' => $maxResults,
                 'startIndex' => max(0, $startIndex),
+                'projection' => 'full',
                 'key' => $key,
             ]);
 
@@ -47,6 +48,7 @@ class GoogleBooksClient
             ->timeout(15)
             ->acceptJson()
             ->get("/volumes/{$volumeId}", [
+                'projection' => 'full',
                 'key' => $key,
             ]);
 

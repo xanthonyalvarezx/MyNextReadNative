@@ -18,22 +18,35 @@
 }
 
 .app-nav-logo {
-    font-family: var(--font-display);
-    font-size: 0.85rem;
-    font-weight: 400;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: color-mix(in srgb, var(--color-teal) 55%, var(--color-text));
-    padding: 0.5rem 0.65rem;
+    display: block;
+    padding: 0.35rem 0.25rem;
     border-radius: var(--radius-md);
-    background: linear-gradient(
-        145deg,
-        var(--color-teal-soft) 0%,
-        color-mix(in srgb, var(--color-indigo-soft) 60%, var(--color-surface)) 100%
-    );
-    border: 1px solid color-mix(in srgb, var(--color-teal) 35%, var(--color-slate));
     text-align: center;
+    text-decoration: none;
+    line-height: 0;
+    border: 1px solid color-mix(in srgb, var(--color-teal) 22%, var(--color-slate));
+    background: color-mix(in srgb, var(--color-surface) 88%, black);
     box-shadow: var(--shadow-inner);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.app-nav-logo:hover {
+    border-color: color-mix(in srgb, var(--color-teal) 40%, var(--color-slate));
+    box-shadow: var(--shadow-soft);
+}
+
+.app-nav-logo:focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 2px;
+}
+
+.app-nav-logo img {
+    width: 100%;
+    max-width: 11rem;
+    height: auto;
+    display: block;
+    margin-inline: auto;
+    object-fit: contain;
 }
 
 .app-nav-links {

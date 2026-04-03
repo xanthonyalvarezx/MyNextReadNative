@@ -1,0 +1,88 @@
+.app-nextread__flash {
+    width: 100%;
+    max-width: 28rem;
+    margin: 0 0 0.75rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: var(--radius-md);
+    font-size: 0.84rem;
+    border: 1px solid var(--color-border);
+}
+
+.app-nextread__flash--success {
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-teal) 14%, var(--color-surface-card));
+    border-color: color-mix(in srgb, var(--color-teal) 40%, var(--color-border));
+}
+
+.app-nextread__empty {
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+.app-nextread__shelf-form {
+    max-width: 16rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.app-nextread_book-card-shelf--display {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.35rem;
+}
+
+.app-nextread {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(
+        165deg,
+        color-mix(in srgb, var(--color-teal) 5%, var(--color-onyx)) 0%,
+        color-mix(in srgb, var(--color-indigo) 7%, var(--color-onyx)) 100%
+    );
+
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.app-nextread_book-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-surface-card);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-soft);
+}
+
+.app-nextread__title {
+    font-size: 1.5rem;
+    width: 100%;
+    font-weight: 600;
+    color: var(--color-text);
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: var(--color-surface-card);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 1rem;
+}
+
+.app-nextread_book-card-image img {
+    width: 10vw;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-soft);
+}

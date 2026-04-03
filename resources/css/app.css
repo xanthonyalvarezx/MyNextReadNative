@@ -4,6 +4,7 @@
 @import "./landing.css" layer(components);
 @import "./search.css" layer(components);
 @import "./library.css" layer(components);
+@import "./nextread.css" layer(components);
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -37,14 +38,42 @@
     --color-text: #e8eae9;
     --color-text-muted: #9aabae;
 
-    --color-teal-soft: color-mix(in srgb, var(--color-teal) 24%, var(--color-onyx));
-    --color-indigo-soft: color-mix(in srgb, var(--color-indigo) 22%, var(--color-onyx));
-    --color-taupe-glow: color-mix(in srgb, var(--color-taupe) 35%, var(--color-text));
-    --color-border: color-mix(in srgb, var(--color-slate) 45%, var(--color-onyx));
+    --color-teal-soft: color-mix(
+        in srgb,
+        var(--color-teal) 24%,
+        var(--color-onyx)
+    );
+    --color-indigo-soft: color-mix(
+        in srgb,
+        var(--color-indigo) 22%,
+        var(--color-onyx)
+    );
+    --color-taupe-glow: color-mix(
+        in srgb,
+        var(--color-taupe) 35%,
+        var(--color-text)
+    );
+    --color-border: color-mix(
+        in srgb,
+        var(--color-slate) 45%,
+        var(--color-onyx)
+    );
 
-    --color-alert-soft: color-mix(in srgb, var(--color-indigo) 16%, var(--color-onyx));
-    --color-alert-border: color-mix(in srgb, var(--color-indigo) 45%, var(--color-slate));
-    --color-alert-text: color-mix(in srgb, var(--color-text) 88%, var(--color-teal));
+    --color-alert-soft: color-mix(
+        in srgb,
+        var(--color-indigo) 16%,
+        var(--color-onyx)
+    );
+    --color-alert-border: color-mix(
+        in srgb,
+        var(--color-indigo) 45%,
+        var(--color-slate)
+    );
+    --color-alert-text: color-mix(
+        in srgb,
+        var(--color-text) 88%,
+        var(--color-teal)
+    );
 
     --shadow-soft: 0 4px 28px rgb(0 0 0 / 0.35);
     --shadow-lift: 0 12px 40px rgb(0 0 0 / 0.45);
@@ -105,4 +134,10 @@ html {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+}
+
+/* Landing stacks several cards; allow scroll inside fixed viewport layout */
+.app-main:has(> .app-landing) {
+    overflow-x: hidden;
+    overflow-y: auto;
 }

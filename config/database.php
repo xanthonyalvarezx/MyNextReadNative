@@ -44,6 +44,18 @@ return [
             'transaction_mode' => 'DEFERRED',
         ],
 
+        /*
+         * NativePHP overwrites this connection at runtime when NATIVEPHP_RUNNING is true.
+         * A default entry avoids "connection [nativephp] not configured" and matches dev (database/nativephp.sqlite).
+         */
+        'nativephp' => [
+            'driver' => 'sqlite',
+            'url' => env('DB_URL'),
+            'database' => database_path('nativephp.sqlite'),
+            'prefix' => '',
+            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+        ],
+
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),

@@ -3,8 +3,12 @@
         <div class="search-page__inner">
             <h1 class="search-page__title">Search books</h1>
 
+            @if (session('success'))
+                <p class="search-page__flash search-page__flash--success" role="status">{{ session('success') }}</p>
+            @endif
+
             <form class="search-page__form" action="{{ route('search') }}" method="get">
-                <input class="search-page__query" type="search" name="q" value="{{ $query }}"
+                <input class="search-page__query" type="search" name="q" value=""
                     placeholder="Title, author, ISBN, or scan barcode…" autocomplete="off" autofocus>
                 <button class="search-page__submit" type="submit">Search</button>
                 <button class="search-page__scan-open" type="button" data-book-scan-open>
@@ -33,7 +37,7 @@
                 <p class="search-page__error" role="alert">{{ $error }}</p>
             @endif
 
-            @if ($query !== '' && !$error && $totalItems !== null)
+            @if ($searchQuery !== '' && !$error && $totalItems !== null)
                 <p class="search-page__count">
                     About {{ number_format($totalItems) }} results
                 </p>
@@ -64,20 +68,41 @@
                                             rel="noopener noreferrer">
                                             Preview on Google Books
                                         </a>
-                                        <ul class="search-page__card-buttons" aria-label="Shelf actions">
-                                            <li><button type="button" class="search-page__card-btn">Read</button></li>
-                                            <li><button type="button" class="search-page__card-btn">Want to
-                                                    Read</button>
-                                            </li>
-                                            <li><button type="button" class="search-page__card-btn">Currently
-                                                    Reading</button>
-                                            </li>
-                                            <li>
-                                                <button type="button" class="search-page__card-btn">Owned</button>
-                                            </li>
+                                        <form action="{{ route('library.save') }}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="return_to" value="search">
+                                            <input type="hidden" name="search_q" value="{{ $searchQuery }}">
+                                            <input type="hidden" name="title" value="{{ $book->title }}">
+                                            <input type="hidden" name="subtitle" value="{{ $book->subtitle }}">
+                                            <input type="hidden" name="author" value="{{ $book->authorsLine }}">
+                                            <input type="hidden" name="language" value="{{ $book->language }}">
+                                            <input type="hidden" name="genre" value="{{ $book->genre }}">
+                                            <input type="hidden" name="isbn" value="{{ $book->isbn }}">
+                                            <input type="hidden" name="publisher" value="{{ $book->publisher }}">
+                                            <input type="hidden" name="publication_date" value="{{ $book->published }}">
+                                            <input type="hidden" name="pages" value="{{ $book->pageCount ?? '' }}">
+                                            <input type="hidden" name="cover_image" value="{{ $book->thumbnailUrl }}">
+                                            <input type="hidden" name="description" value="{{ $book->description }}">
 
+                                            <ul class="search-page__card-buttons" aria-label="Shelf actions">
+                                                <li><button type="submit" name="shelf" value="read"
+                                                        class="search-page__card-btn">Read</button>
+                                                </li>
+                                                <li><button type="submit" name="shelf" value="want-to-read"
+                                                        class="search-page__card-btn">Want to
+                                                        Read</button>
+                                                </li>
+                                                <li><button type="submit" name="shelf" value="reading"
+                                                        class="search-page__card-btn">Currently
+                                                        Reading</button>
+                                                </li>
+                                                <li>
+                                                    <button type="submit" name="shelf" value="owned"
+                                                        class="search-page__card-btn">Owned</button>
+                                                </li>
                             </li>
                     </ul>
+                    </form>
                 @endif
         </div>
         </li>

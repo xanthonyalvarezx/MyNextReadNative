@@ -4,7 +4,9 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "native:dev": "concurrently -k -c \"#93c5fd,#c4b5fd\" \"php artisan native:serve --no-interaction\" \"vite\" --names=app,vite",
+        "native:build:win": "php artisan native:build win x64 --no-interaction"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",

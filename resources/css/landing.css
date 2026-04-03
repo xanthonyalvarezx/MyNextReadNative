@@ -1,82 +1,501 @@
-/* Landing — teal / indigo accents on onyx */
+/* Landing — headlines slide in; charts slide up; then headlines hide (only charts stay) */
 
 .app-landing {
-    box-sizing: border-box;
-    flex: 1;
-    min-height: 0;
-    width: 100%;
-    padding: clamp(2rem, 6vh, 4rem) clamp(1.5rem, 4vw, 3rem);
+    /* Each line: slide in → pause at center → slide out across; staggered starts */
+    --landing-line-cycle: 4.25s;
+    --landing-line-stagger: 0.38s;
+    /* When the last line finishes its out motion */
+    --landing-headlines-done: calc(
+        var(--landing-line-stagger) * 2 + var(--landing-line-cycle)
+    );
+    --landing-charts-duration: 0.95s;
+    /* Chart after all headline cycles complete */
+    --landing-charts-delay: calc(var(--landing-headlines-done) + 0.5s);
+    /* Collapse headline block once lines have exited */
+    --landing-hide-headlines-after: var(--landing-headlines-done);
+    --landing-headlines-hide-duration: 0.5s;
+
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: clamp(1.25rem, 3vh, 2rem);
-    overflow: auto;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    box-sizing: border-box;
+    min-height: 100%;
+    width: 100%;
+    max-width: 100%;
+    padding: clamp(1rem, 3vw, 2rem);
+    /* Do not let flex shrink this column when stacked with charts */
+    flex-shrink: 0;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    background-color: color-mix(in srgb, var(--color-onyx) 72%, transparent);
+    background-image: url("/bookstore.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.app-landing-headlines {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: min(36rem, 100%);
+    flex-shrink: 0;
+    padding-inline: clamp(0.5rem, 4vw, 1.5rem);
+    /* Single overflow value avoids axis coupling (hidden+visible → scroll quirks) */
+    overflow: hidden;
+    animation: landing-headlines-out var(--landing-headlines-hide-duration) ease
+        forwards;
+    animation-delay: var(--landing-hide-headlines-after);
 }
 
 .app-landing-text {
     width: 100%;
-    max-width: 36rem;
-    padding: clamp(1.25rem, 3vw, 2rem) clamp(1.5rem, 4vw, 2.25rem);
-    border-radius: var(--radius-lg);
-    background: color-mix(in srgb, var(--color-surface-card) 88%, var(--color-indigo));
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-soft);
+    max-width: 100%;
     text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.app-landing-text::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(
-        125deg,
-        color-mix(in srgb, var(--color-teal) 12%, transparent) 0%,
-        transparent 38%,
-        color-mix(in srgb, var(--color-indigo) 18%, transparent) 100%
-    );
-    pointer-events: none;
+    flex-shrink: 0;
+    /* Let transformed h1 extend horizontally while sliding — only outer headlines clips */
+    overflow: visible;
+    padding-block: 0.2rem;
 }
 
 .app-landing-text h1 {
-    position: relative;
+    margin: 0 auto;
+    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-family: var(--font-display);
+    font-size: clamp(1.65rem, 4.2vw, 2.75rem);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    color: var(--color-text);
+    text-shadow:
+        0 1px 2px rgb(0 0 0 / 0.85),
+        0 4px 24px rgb(0 0 0 / 0.55);
+    /* Percent transforms = this box width, not full column — avoids invisible off-screen text */
+    will-change: transform;
+}
+
+/* In → hold center → out across (percentages: in / hold / out) */
+.app-landing-headlines .app-landing-text:nth-child(1) h1 {
+    animation: landing-line-in-left-out-right var(--landing-line-cycle) ease-in-out
+        both;
+    animation-delay: 0s;
+}
+
+.app-landing-headlines .app-landing-text:nth-child(2) h1 {
+    animation: landing-line-in-right-out-left var(--landing-line-cycle) ease-in-out
+        both;
+    animation-delay: var(--landing-line-stagger);
+}
+
+.app-landing-headlines .app-landing-text:nth-child(3) h1 {
+    animation: landing-line-in-left-out-right var(--landing-line-cycle) ease-in-out
+        both;
+    animation-delay: calc(var(--landing-line-stagger) * 2);
+}
+
+@keyframes landing-line-in-left-out-right {
+    0% {
+        opacity: 0;
+        transform: translateX(-105%);
+    }
+
+    20% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    48% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(105%);
+    }
+}
+
+@keyframes landing-line-in-right-out-left {
+    0% {
+        opacity: 0;
+        transform: translateX(105%);
+    }
+
+    20% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    48% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-105%);
+    }
+}
+
+.app-landing__flash {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 28rem;
+    margin: 0.35rem 0 0;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    text-align: center;
+    border-radius: var(--radius-md);
+    border: 1px solid color-mix(in srgb, var(--color-teal) 45%, var(--color-border));
+    background: color-mix(in srgb, var(--color-teal) 12%, var(--color-surface-card));
+    color: var(--color-text);
+}
+
+.app-landing__flash--success {
+    border-color: color-mix(in srgb, var(--color-teal) 40%, var(--color-border));
+}
+
+.app-landing-chart-blocks {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.85rem;
+    width: 100%;
+    max-width: 28rem;
+    margin-top: 0.5rem;
+    flex-shrink: 0;
+}
+
+/* Charts: slide in from bottom (--landing-charts-delay after load; headline hide follows) */
+.app-landing-charts {
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 0;
+    padding: 1rem 1.15rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface-card) 92%, transparent);
+    box-shadow: var(--shadow-soft);
+    opacity: 0;
+    transform: translateY(120%);
+    animation: landing-charts-from-bottom var(--landing-charts-duration)
+        ease-out forwards;
+    animation-delay: var(--landing-charts-delay);
+}
+
+.app-landing-charts__title {
+    margin: 0 0 0.85rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.app-landing-charts__empty {
+    margin: 0 auto;
+    max-width: 22rem;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.app-landing-spotlight {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+    text-align: center;
+    min-width: 0;
+}
+
+.app-landing-spotlight__cover {
+    flex-shrink: 0;
+    width: min(8.5rem, 42vw);
+    max-height: 13rem;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+    box-shadow: var(--shadow-soft);
+    background: color-mix(in srgb, var(--color-surface) 80%, var(--color-onyx));
+}
+
+.app-landing-spotlight__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 13rem;
+    object-fit: cover;
+}
+
+.app-landing-spotlight__title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-text);
+    word-break: break-word;
+    max-width: 100%;
+}
+
+.app-landing-spotlight__meta {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    line-height: 1.35;
+    word-break: break-word;
+    max-width: 100%;
+}
+
+.app-landing-spotlight__progress {
+    margin: 0;
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-teal);
+    font-weight: 600;
+}
+
+.app-landing-spotlight__progress-form {
+    width: 100%;
+    max-width: 16rem;
+    margin-top: 0.35rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
+}
+
+.app-landing-spotlight__progress-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.app-landing-spotlight__progress-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+}
+
+.app-landing-spotlight__progress-input {
+    box-sizing: border-box;
+    width: 5.5rem;
+    min-width: 0;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.88rem;
+    font-variant-numeric: tabular-nums;
+    font-family: inherit;
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.app-landing-spotlight__progress-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.78rem;
+    font-family: inherit;
+    font-weight: 600;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    border: 1px solid color-mix(in srgb, var(--color-teal) 45%, var(--color-border));
+    background: color-mix(in srgb, var(--color-teal) 22%, var(--color-surface));
+    color: var(--color-text);
+}
+
+.app-landing-spotlight__progress-btn:hover {
+    background: color-mix(in srgb, var(--color-teal) 32%, var(--color-surface));
+}
+
+.app-landing-spotlight__progress-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.app-landing-spotlight__finished-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.78rem;
+    font-family: inherit;
+    font-weight: 600;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 88%, var(--color-indigo));
+    color: var(--color-text);
+}
+
+.app-landing-spotlight__finished-btn:hover {
+    background: color-mix(in srgb, var(--color-surface) 78%, var(--color-indigo));
+}
+
+.app-landing-spotlight__finished-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.app-landing-spotlight__error {
+    margin: 0;
+    font-size: 0.76rem;
+    line-height: 1.3;
+    color: color-mix(in srgb, var(--color-indigo) 55%, var(--color-text));
+    text-align: center;
+}
+
+.app-landing-stat {
+    text-align: center;
+    padding: 0.35rem 0 0.15rem;
+}
+
+.app-landing-stat__value {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
     font-weight: 400;
+    line-height: 1;
     letter-spacing: 0.02em;
-    line-height: 1.25;
-    background: linear-gradient(
-        92deg,
-        var(--color-text) 0%,
-        color-mix(in srgb, var(--color-teal) 55%, var(--color-text)) 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--color-text);
+    text-shadow:
+        0 1px 2px rgb(0 0 0 / 0.85),
+        0 4px 20px rgb(0 0 0 / 0.45);
 }
 
-.app-landing-text:nth-child(2) h1 {
-    background: linear-gradient(
-        92deg,
-        color-mix(in srgb, var(--color-slate) 35%, var(--color-text)) 0%,
-        var(--color-text) 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+.app-landing-stat__sub {
+    margin: 0.65rem 0 0;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    line-height: 1.35;
 }
 
-.app-landing-text:nth-child(3) h1 {
-    background: linear-gradient(
-        92deg,
-        var(--color-text) 0%,
-        color-mix(in srgb, var(--color-indigo) 42%, var(--color-teal)) 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+/* Genre pie — gradient from DB (inline on .app-landing-pie) */
+.app-landing-pie-layout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1.1rem 1.35rem;
+}
+
+.app-landing-pie-ring {
+    position: relative;
+    flex-shrink: 0;
+    width: min(10.5rem, 48vw);
+    aspect-ratio: 1;
+}
+
+.app-landing-pie-ring::after {
+    content: "";
+    position: absolute;
+    inset: 24%;
+    z-index: 1;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-surface-card) 96%, var(--color-onyx));
+    border: 1px solid color-mix(in srgb, var(--color-border) 65%, transparent);
+    box-shadow: var(--shadow-inner);
+}
+
+.app-landing-pie {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    /* background: conic-gradient from PHP (inline) */
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.07),
+        0 2px 12px rgb(0 0 0 / 0.25);
+}
+
+.app-landing-pie-legend {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.4rem;
+    min-width: 11rem;
+    font-size: 0.8rem;
+    color: var(--color-text);
+}
+
+.app-landing-pie-legend li {
+    display: grid;
+    grid-template-columns: 0.65rem 1fr auto;
+    align-items: center;
+    gap: 0.45rem 0.5rem;
+}
+
+.app-landing-pie-legend__swatch {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 2px;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12);
+}
+
+.app-landing-pie-legend__label {
+    letter-spacing: 0.01em;
+}
+
+.app-landing-pie-legend__pct {
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-muted);
+    font-size: 0.76rem;
+}
+
+@keyframes landing-charts-from-bottom {
+    from {
+        opacity: 0;
+        transform: translateY(120%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes landing-headlines-out {
+    from {
+        opacity: 1;
+        max-height: 32rem;
+    }
+
+    to {
+        opacity: 0;
+        max-height: 0;
+        margin: 0;
+        padding: 0;
+        visibility: hidden;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .app-landing-headlines {
+        animation: none;
+    }
+
+    .app-landing-headlines .app-landing-text:nth-child(1) h1,
+    .app-landing-headlines .app-landing-text:nth-child(2) h1,
+    .app-landing-headlines .app-landing-text:nth-child(3) h1 {
+        animation: none;
+        opacity: 1;
+        transform: none;
+        animation-delay: 0s !important;
+    }
+
+    .app-landing-charts {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
 }
